@@ -1,0 +1,21 @@
+version: 1
+
+name: cjson
+
+repo_url: https://github.com/DaveGamble/cJSON.git
+
+targets:
+  build: |
+    mkdir -p ${RSB_BUILD_OUTPUT}/lib ${RSB_BUILD_OUTPUT}/include
+    gcc -shared -fPIC -o ${RSB_BUILD_OUTPUT}/lib/libcjson.dylib cJSON.c
+    gcc -c -fPIC -O2 -o cJSON.o cJSON.c
+    ar rcs ${RSB_BUILD_OUTPUT}/lib/libcjson.a cJSON.o
+    cp cJSON.h ${RSB_BUILD_OUTPUT}/include/
+
+artifacts:
+  - type: runtime
+    include:
+      - "lib/**"
+      - "include/**"
+
+components: []
